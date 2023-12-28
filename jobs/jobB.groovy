@@ -10,6 +10,7 @@ pipeline {
             steps {
                // build job: "jobA", wait: true not re
                // addd
+               // testing 
                
             }
         }
