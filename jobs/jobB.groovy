@@ -8,7 +8,9 @@ pipeline {
         }
         stage('triggerjobA') {
             steps {
-               // build job: "jobA", wait: true
+               // build job: "jobA", wait: true not re
+               // addd
+               
             }
         }
     }
