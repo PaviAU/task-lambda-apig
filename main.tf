@@ -43,3 +43,4 @@ data "archive_file" "lambda_package" {
   source_file = "index.js"
   output_path = "index.zip"
 }
+
