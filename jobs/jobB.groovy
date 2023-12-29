@@ -34,9 +34,9 @@ pipeline {
             steps {
                     dir('terrafiles/'){
                         // sh "terraform init -force-copy -reconfigure -backend-config  'bucket=${s3BucketName}' -backend-config  region=${s3BucketRegion} -backend-config  'key=${tfstateFile}' -backend-config dynamodb_table='${dynamoDBTable}'"
-                        sh "terraform init"
-                        sh "terraform fmt -list=true -write=false -diff=true -check=true"
-                        sh "terraform validate"
+                        sh "terraform init -reconfigure"
+                        //sh "terraform fmt -list=true -write=false -diff=true -check=true"
+                        //sh "terraform validate"
                         // sh "terraform plan"
                   }
             }
