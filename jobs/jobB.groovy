@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     environment{
-        def s3BucketName = "task-lambda-apigateway-bucket-29122023";
+       /*  def s3BucketName = "task-lambda-apigateway-bucket-29122023";
         def s3BucketRegion = "us-east-1";
         def tfStateFile = "./terraform.tfstate";
-        def dynamoDBTable = "task-lambda-apigateway-table-29122023";
+        def dynamoDBTable = "task-lambda-apigateway-table-29122023"; */
         def gitInfraBranchName          = "main";
     }
     stages {
