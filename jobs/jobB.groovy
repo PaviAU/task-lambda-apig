@@ -35,25 +35,32 @@ pipeline {
 
             stage('Terraform init & Plan stage') {
             steps {
-                    // sh "terraform init -force-copy -reconfigure -backend-config  'bucket=${s3BucketName}' -backend-config  region=${s3BucketRegion} -backend-config  'key=${tfstateFile}' -backend-config dynamodb_table='${dynamoDBTable}'"
-                    sh "terraform init"
-                    // sh "terraform fmt -list=true -write=false -diff=true -check=true"
-                    sh "terraform validate"
-                   // sh "terraform plan"
+                    dir('terrafiles/'){
+                        // sh "terraform init -force-copy -reconfigure -backend-config  'bucket=${s3BucketName}' -backend-config  region=${s3BucketRegion} -backend-config  'key=${tfstateFile}' -backend-config dynamodb_table='${dynamoDBTable}'"
+                        sh "terraform init"
+                        // sh "terraform fmt -list=true -write=false -diff=true -check=true"
+                        sh "terraform validate"
+                    // sh "terraform plan"
                   }
+            }
                 
             } 
 
             stage('Terraform plan stage') {
             steps {
-                    sh "terraform plan "
+                    dir('terrafiles/'){
+                        sh "terraform plan"
+                    }
                   }
                 
             }  
 
            /*  stage('Terraform apply stage') {
             steps {
-                    sh "terraform apply --auto-approve "
+                    dir('terrafiles/'){
+                        sh "terraform apply --auto-approve "
+                        }
+
                   }
                 
             } */
