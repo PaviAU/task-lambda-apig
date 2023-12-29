@@ -160,10 +160,10 @@ resource "aws_api_gateway_base_path_mapping" "gw_mapping" {
   domain_name = "api.sumeet.life"
   api_id      = aws_api_gateway_rest_api.my_api.id
   stage_name  = "dev" # Adjust as needed
-}   */
+}   
 
 
 output "api_gateway_invokeURL" {
   description = "Invoke URL of REST API Gateway"
   value       = aws_api_gateway_rest_api.my_api.api_gateway_invokeURL
-}
+} */
