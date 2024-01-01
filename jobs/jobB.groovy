@@ -6,7 +6,10 @@ pipeline {
         def s3BucketRegion = "us-east-1";
         def tfStateFile = "./terraform.tfstate";
         def dynamoDBTable = "task-lambda-apigateway-table-29122023"; 
-        def gitInfraBranchName          = "main";
+        def gitInfraBranchName = "main";
+        /* def AWS_ACCESS_KEY_ID = credentials('AKIAZHWHWIOUOCEWLP5K')
+        def AWS_SECRET_ACCESS_KEY = credentials('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') */
+
     }
     stages {
         stage('build') {
@@ -33,24 +36,29 @@ pipeline {
             stage('Terraform init & Plan stage') {
             steps {
                     dir('terrafiles/'){
+                        script{
+                        
                         // sh "terraform init -force-copy -reconfigure -backend-config  'bucket=${s3BucketName}' -backend-config  region=${s3BucketRegion} -backend-config  'key=${tfstateFile}' -backend-config dynamodb_table='${dynamoDBTable}'"
-                        sh "terraform init -reconfigure"
-                        //sh "terraform fmt -list=true -write=false -diff=true -check=true"
-                        //sh "terraform validate"
+                        sh "terraform init -force-copy -reconfigure"
+                        sh "terraform fmt -list=true -write=false -diff=true -check=true"
+                        sh "terraform validate"
                         // sh "terraform plan"
+                        
+                    }
+                        
                   }
             }
                 
             } 
 
-             stage('Terraform plan stage') {
+             /* stage('Terraform plan stage') {
             steps {
                     dir('terrafiles/'){
                         sh "terraform plan"
                     }
                   }
                 
-            }   
+            } */   
 
            /*  stage('Terraform apply stage') {
             steps {
