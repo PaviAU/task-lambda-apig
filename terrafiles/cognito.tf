@@ -14,7 +14,7 @@ resource "aws_cognito_user_pool_client" "client" {
 
   user_pool_id  = aws_cognito_user_pool.pool.id
   callback_urls = ["https://example.com"]
-  logout_urls   = ["https://anand.life"]
+  logout_urls   = ["https://sumeet.life"]
 }
 
 resource "aws_cognito_user" "example" {

@@ -8,12 +8,12 @@ resource "aws_api_gateway_rest_api" "my_api" {
   }
 }
 
- resource "aws_api_gateway_authorizer" "demo" {
+resource "aws_api_gateway_authorizer" "demo" {
   name          = "my_apig_authorizer2"
   rest_api_id   = aws_api_gateway_rest_api.my_api.id
   type          = "COGNITO_USER_POOLS"
   provider_arns = [aws_cognito_user_pool.pool.arn]
-}   
+}
 
 resource "aws_api_gateway_resource" "root" {
   rest_api_id = aws_api_gateway_rest_api.my_api.id
@@ -21,15 +21,15 @@ resource "aws_api_gateway_resource" "root" {
   path_part   = "mypath"
 }
 
- resource "aws_api_gateway_method" "proxy" {
+resource "aws_api_gateway_method" "proxy" {
   rest_api_id = aws_api_gateway_rest_api.my_api.id
   resource_id = aws_api_gateway_resource.root.id
   http_method = "POST"
 
- // authorization = "NONE" // comment this out in cognito section
+  //authorization = "NONE" // comment this out in cognito section
   authorization = "COGNITO_USER_POOLS"
   authorizer_id = aws_api_gateway_authorizer.demo.id
-} 
+}
 
 resource "aws_api_gateway_integration" "lambda_integration" {
   rest_api_id             = aws_api_gateway_rest_api.my_api.id
@@ -76,15 +76,15 @@ resource "aws_api_gateway_integration_response" "proxy" {
 }
 
 //options
- resource "aws_api_gateway_method" "options" {
+resource "aws_api_gateway_method" "options" {
   rest_api_id = aws_api_gateway_rest_api.my_api.id
   resource_id = aws_api_gateway_resource.root.id
   http_method = "OPTIONS"
-  //authorization = "NONE"
+  #   authorization = "NONE"
 
   authorization = "COGNITO_USER_POOLS"
-  authorizer_id = aws_api_gateway_authorizer.demo.id 
-} 
+  authorizer_id = aws_api_gateway_authorizer.demo.id
+}
 
 resource "aws_api_gateway_integration" "options_integration" {
   rest_api_id             = aws_api_gateway_rest_api.my_api.id
@@ -140,30 +140,6 @@ resource "aws_api_gateway_deployment" "deployment" {
   stage_name  = "dev"
 }
 
-
-
-# // domain
-resource "aws_acm_certificate" "my_api_cert" {
-  domain_name               = "api.sumeet.life"
-  provider                  = aws.aws_useast1
-  subject_alternative_names = ["api.sumeet.life"] # Your custom domain
-  validation_method         = "DNS"
+output "api_gateway_post_invoke_url" {
+  value = aws_api_gateway_deployment.deployment.invoke_url
 }
-
-/* resource "aws_api_gateway_domain_name" "gw_domain" {
-  certificate_arn = aws_acm_certificate.my_api_cert.arn
-  domain_name     = "api.sumeet.life"
-  security_policy = "TLS_1_2"
-}
- 
-resource "aws_api_gateway_base_path_mapping" "gw_mapping" {
-  domain_name = "api.sumeet.life"
-  api_id      = aws_api_gateway_rest_api.my_api.id
-  stage_name  = "dev" # Adjust as needed
-}   
-
-
-output "api_gateway_invokeURL" {
-  description = "Invoke URL of REST API Gateway"
-  value       = aws_api_gateway_rest_api.my_api.api_gateway_invokeURL
-} */
