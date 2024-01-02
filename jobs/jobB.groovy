@@ -38,11 +38,11 @@ pipeline {
                     dir('terrafiles/'){
                         script{
                         
-                        // sh "terraform init -force-copy -reconfigure -backend-config  'bucket=${s3BucketName}' -backend-config  region=${s3BucketRegion} -backend-config  'key=${tfstateFile}' -backend-config dynamodb_table='${dynamoDBTable}'"
-                        sh "terraform init -force-copy -reconfigure"
-                        //sh "terraform fmt -list=true -write=false -diff=true -check=true"
-                        //sh "terraform validate"
-                         sh "terraform plan"
+                        sh "terraform init -force-copy -reconfigure -backend-config  'bucket=${s3BucketName}' -backend-config  region=${s3BucketRegion} -backend-config  'key=${tfstateFile}' -backend-config dynamodb_table='${dynamoDBTable}'"
+                        //sh "terraform init -force-copy -reconfigure"
+                        sh "terraform fmt -list=true -write=false -diff=true -check=true"
+                        sh "terraform validate"
+                        
                         
                     }
                         
@@ -51,16 +51,16 @@ pipeline {
                 
             } 
 
-             /* stage('Terraform plan stage') {
+            stage('Terraform plan stage') {
             steps {
                     dir('terrafiles/'){
                         sh "terraform plan"
                     }
                   }
                 
-            } */   
+            }  
 
-           /*  stage('Terraform apply stage') {
+            stage('Terraform apply stage') {
             steps {
                     dir('terrafiles/'){
                         sh "terraform apply --auto-approve "
@@ -68,7 +68,7 @@ pipeline {
 
                   }
                 
-            } */
+            } 
         }
     }
 
